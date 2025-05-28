@@ -1,4 +1,4 @@
-class Box {
+class Boundary {
     constructor(x, y, w, h) {
         this.x = x;
         this.y = y;
@@ -6,10 +6,10 @@ class Box {
         this.h = h;
         let options = {
             friction: 0.3,
-            restitution: 0.6
+            restitution: 0.6,
+            isStatic: true
         }
         this.body = Bodies.rectangle(this.x, this.y, this.w, this.h, options);
-        
         Composite.add(world, this.body);
     }
 
@@ -21,8 +21,8 @@ class Box {
         rotate(angle);
         rectMode(CENTER);
         strokeWeight(1);
-        stroke(255)
-        fill(127);
+        noStroke();
+        fill(0);
         rect(0, 0, this.w, this.h);
         pop();
     }
