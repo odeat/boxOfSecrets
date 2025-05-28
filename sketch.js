@@ -18,15 +18,21 @@ let ground;
 let mouseConstraint = null;
 let selectedBox = null;
 let leftWall, rightWall, topWall;
+let droppedBoxSound;
+
+function preload() {
+    droppedBoxSound = loadSound('sounds/droppedBoxSound.mp3');
+}
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
-    // create an engine
+  
     engine = Engine.create();
     world = engine.world;
 
     // Ground
     ground = new Boundary(window.innerWidth / 2, height + 20, width, 100);
+
     // Borders
     leftWall = new Boundary(-50, height / 2, 100, height);
     rightWall = new Boundary(width + 50, height / 2, 100, height);
@@ -42,8 +48,44 @@ function setup() {
     boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
     boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
     boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
-}
+    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
+    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
+    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
+    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
 
+    // Add collision event listener
+    Matter.Events.on(engine, 'collisionStart', function(event) {
+        for (let pair of event.pairs) {
+            let bodies = [pair.bodyA, pair.bodyB];
+
+            // checks if box hit the left, right or ceiling border
+            let borderBodies = [leftWall.body, rightWall.body, topWall.body];
+            let border = bodies.find(b => borderBodies.includes(b));
+            let box = boxes.find(box => bodies.includes(box.body));
+
+            // plays sound if a box hits a border (not ground) and only once per collision
+            if (box && border && droppedBoxSound && droppedBoxSound.isLoaded()) {
+                if (!box._isTouchingBorder) {
+                    droppedBoxSound.play();
+                    box._isTouchingBorder = true;
+                }
+            }
+        }
+    });
+
+    // adds collision end event listener to reset the touching state
+    Matter.Events.on(engine, 'collisionEnd', function(event) {
+        for (let pair of event.pairs) {
+            let bodies = [pair.bodyA, pair.bodyB];
+            let borderBodies = [leftWall.body, rightWall.body, topWall.body];
+            let box = boxes.find(box => bodies.includes(box.body));
+            let border = bodies.find(b => borderBodies.includes(b));
+            if (box && border) {
+                box._isTouchingBorder = false;
+            }
+        }
+    });
+}
 
 function draw() {
     background(51);
