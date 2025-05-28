@@ -17,15 +17,24 @@ let boxes = [];
 let ground;
 let mouseConstraint = null;
 let selectedBox = null;
+let leftWall, rightWall, topWall;
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
     // create an engine
     engine = Engine.create();
     world = engine.world;
-    // Engine.run is deprecated
-    ground = new Boundary(window.innerWidth / 2, height, width, 100);
+
+    // Ground
+    ground = new Boundary(window.innerWidth / 2, height + 20, width, 100);
+    // Borders
+    leftWall = new Boundary(-50, height / 2, 100, height);
+    rightWall = new Boundary(width + 50, height / 2, 100, height);
+    topWall = new Boundary(width / 2, -50, width, 100);
     Composite.add(world, ground);
+    Composite.add(world, leftWall);
+    Composite.add(world, rightWall);
+    Composite.add(world, topWall);
 
     boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
     boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
@@ -43,6 +52,9 @@ function draw() {
         boxes[i].show();
     }
     ground.show();
+    leftWall.show();
+    rightWall.show();
+    topWall.show();
 }
 
 function mousePressed() {
