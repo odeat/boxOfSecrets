@@ -3,3 +3,7 @@
 De "dozen" zijn momenteel rectangles maar die zou ik graag willen veranderen naar box.png afbeeldingen
 Wanneer er dan op de dood geklikt word met de mouseClicked() function, dan zal de box.png overgaan naar openedBox.png
 En dan vervolgens uiteraard naar de pagina met "het geheim" waar de audio etc. afgespeeld kan worden
+
+05/29/2025
+
+de achtergrond blurren/donkerder maken wanneer er op een doos geklikt word en geopend is

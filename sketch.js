@@ -1,10 +1,3 @@
-// Coding Train / Daniel Shiffman
-// 15.7 Matter.js tutorial Basic Implemenation
-
-// Youtube: https://www.youtube.com/watch?v=urR596FsU68
-
-// Note that the syntax in the sketch has been updated. Refer to NOC Chapter 6
-
 // let Engine = Matter.Engine,
 //     World = Matter.World,
 //     Bodies = Matter.Bodies;
@@ -18,15 +11,45 @@ let ground;
 let mouseConstraint = null;
 let selectedBox = null;
 let leftWall, rightWall, topWall;
+
 let droppedBoxSound;
+let openingBoxSound;
+let fiftyYearsOldSound;
+
+let imgClosedBox;
+let imgOpenedBox;
+let imgSecret1;
+let fiftyYearsOldImg;
+let atticImg;
+
+let showSecret = false;
+let currentSecretImg = null;
 
 function preload() {
     droppedBoxSound = loadSound('sounds/droppedBoxSound.mp3');
+    openingBoxSound = loadSound('sounds/openingBoxSound.mp3');
+    fiftyYearsOldSound = loadSound('sounds/50yearsOldSound.mp3');
+    
+    imgClosedBox = loadImage('/assets/closedBox.png');
+    imgOpenedBox = loadImage('/assets/openedBox.png');
+
+    imgSecret1 = loadImage('/assets/secret1.png');
+    imgSecret2 = loadImage('/assets/secret2.png');
+    imgSecret3 = loadImage('/assets/secret3.png');  
+    imgSecret4 = loadImage('/assets/secret4.png');
+    imgSecret5 = loadImage('/assets/secret5.png');
+    imgSecret6 = loadImage('/assets/secret6.png');
+    imgSecret7 = loadImage('/assets/secret7.png');
+    imgSecret8 = loadImage('/assets/secret8.png');
+    imgSecret9 = loadImage('/assets/secret9.png');
+    imgSecret10 = loadImage('/assets/secret10.png');
+    fiftyYearsOldImg = loadImage('/assets/fiftyYearsOldImg.png');
+    atticImg = loadImage('/assets/atticImg.jpg');
 }
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
-  
+
     engine = Engine.create();
     world = engine.world;
 
@@ -41,17 +64,23 @@ function setup() {
     Composite.add(world, leftWall);
     Composite.add(world, rightWall);
     Composite.add(world, topWall);
+    	
+    for (let i = 0; i < 11; i++) {
+        boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(80, 160), random(80, 160)));
+    }
+    boxes[0].img = imgSecret1;
+    boxes[1].img = imgSecret2;
+    boxes[2].img = imgSecret3;
+    boxes[3].img = imgSecret4;
+    boxes[4].img = imgSecret5;
+    boxes[5].img = imgSecret6;
+    boxes[6].img = imgSecret7;
+    boxes[7].img = imgSecret8;
+    boxes[8].img = imgSecret9;
+    boxes[9].img = imgSecret10;
+    boxes[10].sound = fiftyYearsOldSound
+    boxes[10].img = fiftyYearsOldImg;
 
-    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
-    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
-    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
-    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
-    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
-    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
-    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
-    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
-    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
-    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(10, 40), random(10,40)));
 
     // Add collision event listener
     Matter.Events.on(engine, 'collisionStart', function(event) {
@@ -85,11 +114,16 @@ function setup() {
             }
         }
     });
+
+    
 }
 
 function draw() {
     background(51);
+    imageMode(CENTER);
+    image(atticImg, width / 2, height / 2, atticImg.width * 2.2, atticImg.height * 2.2);
     Engine.update(engine);
+
     for (let i = 0; i < boxes.length; i++) {
         boxes[i].show();
     }
@@ -97,11 +131,32 @@ function draw() {
     leftWall.show();
     rightWall.show();
     topWall.show();
+
+    // Show the secret image in the center if needed
+    if (showSecret && currentSecretImg) {
+        let imgW = currentSecretImg.width;
+        let imgH = currentSecretImg.height;
+        imageMode(CENTER);
+        image(currentSecretImg, width / 2, height / 2, imgW / 2, imgH / 2);
+    }
 }
 
 function mousePressed() {
+    let boxClicked = false;
     for (let i = 0; i < boxes.length; i++) {
         if (boxes[i].contains(mouseX, mouseY)) {
+            // Open the box if not already opened
+            if (!boxes[i].opened) {
+                boxes[i].opened = true;
+                showSecret = true;
+                currentSecretImg = boxes[i].img; // Show the secret for this box
+                if (openingBoxSound && openingBoxSound.isLoaded()) {
+                    openingBoxSound.play();
+                }
+                if (boxes[i].sound && boxes[i].sound.isLoaded()) {
+                    boxes[i].sound.play();
+                }
+            }
             selectedBox = boxes[i];
             mouseConstraint = Matter.Constraint.create({
                 pointA: { x: mouseX, y: mouseY },
@@ -110,8 +165,19 @@ function mousePressed() {
                 damping: 0.1
             });
             Composite.add(world, mouseConstraint);
+            boxClicked = true;
             break;
         }
+    }
+    if (!boxClicked) {
+        // Stop any box audio if open and user clicks outside
+        for (let i = 0; i < boxes.length; i++) {
+            if (boxes[i].sound && boxes[i].sound.isPlaying && boxes[i].sound.isPlaying()) {
+                boxes[i].sound.stop();
+            }
+        }
+        showSecret = false;
+        currentSecretImg = null;
     }
 }
 

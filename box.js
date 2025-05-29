@@ -11,6 +11,7 @@ class MyBox {
         this.body = Bodies.rectangle(this.x, this.y, this.w, this.h, options);
         
         Composite.add(world, this.body);
+        this.opened = false;
     }
 
     show() {
@@ -19,11 +20,12 @@ class MyBox {
         push();
         translate(pos.x, pos.y);
         rotate(angle);
-        rectMode(CENTER);
-        strokeWeight(1);
-        stroke(255)
-        fill(127);
-        rect(0, 0, this.w, this.h);
+        imageMode(CENTER);
+        if (this.opened) {
+            image(imgOpenedBox, 0, 0, this.w, this.h);
+        } else {
+            image(imgClosedBox, 0, 0, this.w, this.h);
+        }
         pop();
    }
 
