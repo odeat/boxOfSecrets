@@ -136,6 +136,8 @@ function draw() {
         let imgH = currentSecretImg.height;
         imageMode(CENTER);
         image(currentSecretImg, width / 2, height / 2, imgW / 2, imgH / 2);
+        // image(currentSecretImg, width / 2, height / 2, imgW * 1.2, imgH * 1.2);
+        //image(currentSecretImg, width / 2, height / 2, imgW / 1.5, imgH / 1.5);
     }
 }
 
