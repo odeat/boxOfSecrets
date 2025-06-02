@@ -30,21 +30,21 @@ function preload() {
     openingBoxSound = loadSound('sounds/openingBoxSound.mp3');
     fiftyYearsOldSound = loadSound('sounds/50yearsOldSound.mp3');
     
-    imgClosedBox = loadImage('/assets/closedBox.png');
-    imgOpenedBox = loadImage('/assets/openedBox.png');
+    imgClosedBox = loadImage('assets/closedBox.png');
+    imgOpenedBox = loadImage('assets/openedBox.png');
 
-    imgSecret1 = loadImage('/assets/secret1.png');
-    imgSecret2 = loadImage('/assets/secret2.png');
-    imgSecret3 = loadImage('/assets/secret3.png');  
-    imgSecret4 = loadImage('/assets/secret4.png');
-    imgSecret5 = loadImage('/assets/secret5.png');
-    imgSecret6 = loadImage('/assets/secret6.png');
-    imgSecret7 = loadImage('/assets/secret7.png');
-    imgSecret8 = loadImage('/assets/secret8.png');
-    imgSecret9 = loadImage('/assets/secret9.png');
-    imgSecret10 = loadImage('/assets/secret10.png');
-    fiftyYearsOldImg = loadImage('/assets/fiftyYearsOldImg.png');
-    atticImg = loadImage('/assets/atticImg.jpg');
+    imgSecret1 = loadImage('assets/secret1.png');
+    imgSecret2 = loadImage('assets/secret2.png');
+    imgSecret3 = loadImage('assets/secret3.png');  
+    imgSecret4 = loadImage('assets/secret4.png');
+    imgSecret5 = loadImage('assets/secret5.png');
+    imgSecret6 = loadImage('assets/secret6.png');
+    imgSecret7 = loadImage('assets/secret7.png');
+    imgSecret8 = loadImage('assets/secret8.png');
+    imgSecret9 = loadImage('assets/secret9.png');
+    imgSecret10 = loadImage('assets/secret10.png');
+    fiftyYearsOldImg = loadImage('assets/fiftyYearsOldImg.png');
+    // atticImg = loadImage('assets/atticImg.jpg');
 }
 
 function setup() {
@@ -114,14 +114,12 @@ function setup() {
             }
         }
     });
-
-    
 }
 
 function draw() {
     background(51);
     imageMode(CENTER);
-    image(atticImg, width / 2, height / 2, atticImg.width * 2.2, atticImg.height * 2.2);
+    // image(atticImg, width / 2, height / 2, atticImg.width * 2.2, atticImg.height * 2.2);
     Engine.update(engine);
 
     for (let i = 0; i < boxes.length; i++) {
