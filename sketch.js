@@ -15,6 +15,7 @@ let leftWall, rightWall, topWall;
 let droppedBoxSound;
 let openingBoxSound;
 let fiftyYearsOldSound;
+let audioSecret2;
 
 let imgClosedBox;
 let imgOpenedBox;
@@ -40,6 +41,7 @@ function preload() {
     openingBoxSound = loadSound('sounds/openingBoxSound.mp3');
     fiftyYearsOldSound = loadSound('sounds/50yearsOldSound.mp3');
     bgMusic = loadSound('sounds/Gigi Masin - Call me (But its very slowed).mp3');
+    audioSecret2 = loadSound('sounds/audioSecret2.mp3');
     
     imgClosedBox = loadImage('assets/closedBox.png');
     imgOpenedBox = loadImage('assets/openedBox.png');
@@ -83,7 +85,10 @@ function setup() {
         boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(80, 160), random(80, 160)));
     }
     boxes[0].img = imgSecret1;
+
     boxes[1].img = imgSecret2;
+    boxes[1].sound = audioSecret2;
+    
     boxes[2].img = imgSecret3;
     boxes[3].img = imgSecret4;
     boxes[4].img = imgSecret5;
@@ -123,6 +128,7 @@ function setup() {
             let borderBodies = [leftWall.body, rightWall.body, topWall.body];
             let box = boxes.find(box => bodies.includes(box.body));
             let border = bodies.find(b => borderBodies.includes(b));
+
             if (box && border) {
                 box._isTouchingBorder = false;
             }
@@ -133,13 +139,14 @@ function setup() {
     if (bgMusic && bgMusic.isLoaded()) {
         bgMusic.setVolume(0.3);
         bgMusic.loop();
-        bgMusic.play(); // Ensure it starts immediately
+        bgMusic.play();
     }
 }
 
 function draw() {
     background(51);
     imageMode(CORNER);
+
     // Fade logic for darkenedAttic
     if (showSecret && darkAttic) {
         if (darkAtticAlpha < 255) {
@@ -156,7 +163,7 @@ function draw() {
             darkAtticAlpha = 0;
         }
     }
-    // Draw atticImg2 as the base background
+    // atticImg3 for background
     if (atticImg3) {
         image(atticImg3, 0, 0, width, height);
     }

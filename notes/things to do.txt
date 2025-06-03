@@ -28,4 +28,9 @@ de achtergrond blurren/donkerder maken wanneer er op een doos geklikt word en ge
 
 - De achtergrond donkerder & blurren wanneer een doos geopend is en er een geheim op scherm staat
 
-- Verschillende soorten dozen (met eventuele verschillende geluiden), bijv. een doos met een breekbare sticker erop of een kapotte doos of een verfromvaaide doos
+- Verschillende soorten dozen (met eventuele verschillende geluiden), bijv. een doos met een breekbare sticker erop 
+of een kapotte doos of een verfromvaaide doos
+
+- Verschillende doos geluiden afhankelijk van de inhoud van de doos
+
+- feedback paul: een characrter toevoegen die de gebruiker begeleidt door het verhaal, zoals een oude oma die haar geheimen op haar zolder bewaard
