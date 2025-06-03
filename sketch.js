@@ -25,10 +25,13 @@ let atticImg;
 let showSecret = false;
 let currentSecretImg = null;
 
+let bgMusic;
+
 function preload() {
     droppedBoxSound = loadSound('sounds/droppedBoxSound.mp3');
     openingBoxSound = loadSound('sounds/openingBoxSound.mp3');
     fiftyYearsOldSound = loadSound('sounds/50yearsOldSound.mp3');
+    bgMusic = loadSound('sounds/Gigi Masin - Call me (But its very slowed).mp3');
     
     imgClosedBox = loadImage('assets/closedBox.png');
     imgOpenedBox = loadImage('assets/openedBox.png');
@@ -114,6 +117,12 @@ function setup() {
             }
         }
     });
+
+    // background music on loop
+    if (bgMusic && bgMusic.isLoaded()) {
+        bgMusic.setVolume(0.3);
+        bgMusic.loop();
+    }
 }
 
 function draw() {
