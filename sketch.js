@@ -165,6 +165,10 @@ function mousePressed() {
                 if (boxes[i].sound && boxes[i].sound.isLoaded()) {
                     boxes[i].sound.play();
                 }
+                // Halve the background music volume ONLY when secret is shown
+                if (bgMusic && bgMusic.isLoaded()) {
+                    bgMusic.setVolume(0.15);
+                }
             }
             selectedBox = boxes[i];
             mouseConstraint = Matter.Constraint.create({
@@ -187,6 +191,10 @@ function mousePressed() {
         }
         showSecret = false;
         currentSecretImg = null;
+        // Restore background music volume when secret is hidden
+        if (bgMusic && bgMusic.isLoaded()) {
+            bgMusic.setVolume(0.4);
+        }
     }
 }
 
