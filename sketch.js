@@ -21,11 +21,19 @@ let imgOpenedBox;
 let imgSecret1;
 let fiftyYearsOldImg;
 let atticImg;
+let atticImg2;
+let atticImg3;
+let darkAttic;
 
 let showSecret = false;
 let currentSecretImg = null;
 
 let bgMusic;
+
+let darkAtticAlpha = 0;
+let darkAtticTargetAlpha = 0;
+let darkAtticFadeDuration = 3000; // milliseconds
+let darkAtticFadeStartTime = null;
 
 function preload() {
     droppedBoxSound = loadSound('sounds/droppedBoxSound.mp3');
@@ -48,6 +56,9 @@ function preload() {
     imgSecret10 = loadImage('assets/secret10.png');
     fiftyYearsOldImg = loadImage('assets/fiftyYearsOldImg.png');
     // atticImg = loadImage('assets/atticImg.jpg');
+    atticImg2 = loadImage('assets/atticImg.png');
+    atticImg3 = loadImage('assets/atticImg3.png');
+    darkAttic = loadImage('assets/darkenedAttic.png');
 }
 
 function setup() {
@@ -122,13 +133,43 @@ function setup() {
     if (bgMusic && bgMusic.isLoaded()) {
         bgMusic.setVolume(0.3);
         bgMusic.loop();
+        bgMusic.play(); // Ensure it starts immediately
     }
 }
 
 function draw() {
     background(51);
-    imageMode(CENTER);
-    // image(atticImg, width / 2, height / 2, atticImg.width * 2.2, atticImg.height * 2.2);
+    imageMode(CORNER);
+    // Fade logic for darkenedAttic
+    if (showSecret && darkAttic) {
+        if (darkAtticAlpha < 255) {
+            if (darkAtticFadeStartTime === null) darkAtticFadeStartTime = millis();
+            let elapsed = millis() - darkAtticFadeStartTime;
+            darkAtticAlpha = constrain(map(elapsed, 0, darkAtticFadeDuration, 0, 255), 0, 255);
+        }
+    } else {
+        if (darkAtticAlpha > 0) {
+            if (darkAtticFadeStartTime === null) darkAtticFadeStartTime = millis();
+            let elapsed = millis() - darkAtticFadeStartTime;
+            darkAtticAlpha = constrain(map(elapsed, 0, darkAtticFadeDuration, 255, 0), 0, 255);
+        } else {
+            darkAtticAlpha = 0;
+        }
+    }
+    // Draw atticImg2 as the base background
+    if (atticImg3) {
+        image(atticImg3, 0, 0, width, height);
+    }
+    // Draw darkenedAttic with alpha
+    if (darkAttic && darkAtticAlpha > 0) {
+        push();
+        tint(255, darkAtticAlpha);
+        image(darkAttic, 0, 0, width, height);
+        pop();
+    }
+    if ((showSecret && darkAtticAlpha >= 255) || (!showSecret && darkAtticAlpha <= 0)) {
+        darkAtticFadeStartTime = null;
+    }
     Engine.update(engine);
 
     for (let i = 0; i < boxes.length; i++) {
@@ -145,8 +186,6 @@ function draw() {
         let imgH = currentSecretImg.height;
         imageMode(CENTER);
         image(currentSecretImg, width / 2, height / 2, imgW / 2, imgH / 2);
-        // image(currentSecretImg, width / 2, height / 2, imgW * 1.2, imgH * 1.2);
-        //image(currentSecretImg, width / 2, height / 2, imgW / 1.5, imgH / 1.5);
     }
 }
 
@@ -193,7 +232,7 @@ function mousePressed() {
         currentSecretImg = null;
         // Restore background music volume when secret is hidden
         if (bgMusic && bgMusic.isLoaded()) {
-            bgMusic.setVolume(0.4);
+            bgMusic.setVolume(0.3);
         }
     }
 }
