@@ -41,7 +41,12 @@ function preload() {
     openingBoxSound = loadSound('sounds/openingBoxSound.mp3');
     fiftyYearsOldSound = loadSound('sounds/50yearsOldSound.mp3');
     bgMusic = loadSound('sounds/Gigi Masin - Call me (But its very slowed).mp3');
-    audioSecret2 = loadSound('sounds/audioSecret2.mp3');
+    audioSecret2 = loadSound('sounds/slimfast.mp3');
+    audioSecret4 = loadSound('sounds/imMeantToBeAlone.mp3');
+    audioSecret5 = loadSound('sounds/thankYouForCheating.mp3');
+    audioSecret6 = loadSound('sounds/PTSD.mp3');
+    audioSecret9 = loadSound('sounds/noOutletMalls.mp3');
+
     
     imgClosedBox = loadImage('assets/closedBox.png');
     imgOpenedBox = loadImage('assets/openedBox.png');
@@ -84,19 +89,34 @@ function setup() {
     for (let i = 0; i < 11; i++) {
         boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(80, 160), random(80, 160)));
     }
+
+   
     boxes[0].img = imgSecret1;
 
     boxes[1].img = imgSecret2;
     boxes[1].sound = audioSecret2;
-    
+    boxes[1].sound = audioSecret2;
+
     boxes[2].img = imgSecret3;
+
     boxes[3].img = imgSecret4;
+    boxes[3].sound = audioSecret4;
+
     boxes[4].img = imgSecret5;
+    boxes[4].sound = audioSecret5;
+
     boxes[5].img = imgSecret6;
+    boxes[5].sound = audioSecret6;
+
     boxes[6].img = imgSecret7;
+
     boxes[7].img = imgSecret8;
+
     boxes[8].img = imgSecret9;
+    boxes[8].sound = audioSecret9;
+
     boxes[9].img = imgSecret10;
+
     boxes[10].sound = fiftyYearsOldSound
     boxes[10].img = fiftyYearsOldImg;
 
