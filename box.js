@@ -1,4 +1,9 @@
 class MyBox {
+    img
+    sound
+    openImg
+    closedImg
+
     constructor(x, y, w, h) {
         this.x = x;
         this.y = y;
@@ -22,9 +27,9 @@ class MyBox {
         rotate(angle);
         imageMode(CENTER);
         if (this.opened) {
-            image(imgOpenedBox, 0, 0, this.w, this.h);
+            image(this.openImg, 0, 0, this.w, this.h);
         } else {
-            image(imgClosedBox, 0, 0, this.w, this.h);
+            image(this.closedImg, 0, 0, this.w, this.h);
         }
         pop();
    }

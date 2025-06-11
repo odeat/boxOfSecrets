@@ -74,6 +74,29 @@ function preload() {
     atticImg2 = loadImage('assets/atticImg.png');
     atticImg3 = loadImage('assets/atticImg3.png');
     darkAttic = loadImage('assets/darkenedAttic.png');
+
+    box1opened = loadImage('assets/box1opened.png');
+    box1closed = loadImage('assets/box1closed.png');
+    box2opened = loadImage('assets/box2opened.png');
+    box2closed = loadImage('assets/box2closed.png');
+    box3opened = loadImage('assets/box3opened.png');
+    box3closed = loadImage('assets/box3closed.png');
+    box4opened = loadImage('assets/box4opened.png');
+    box4closed = loadImage('assets/box4closed.png');
+    box5opened = loadImage('assets/box5opened.png');
+    box5closed = loadImage('assets/box5closed.png');
+    box6opened = loadImage('assets/box6opened.png');
+    box6closed = loadImage('assets/box6closed.png');
+    box7opened = loadImage('assets/box7opened.png');
+    box7closed = loadImage('assets/box7closed.png');
+    box8opened = loadImage('assets/box8opened.png');
+    box8closed = loadImage('assets/box8closed.png');
+    box9opened = loadImage('assets/box9opened.png');
+    box9closed = loadImage('assets/box9closed.png');
+    box10opened = loadImage('assets/box10opened.png');
+    box10closed = loadImage('assets/box10closed.png');
+    box11opened = loadImage('assets/box11opened.png');
+    box11closed = loadImage('assets/box11closed.png');
 }
 
 function setup() {
@@ -100,34 +123,55 @@ function setup() {
 
    
     boxes[0].img = imgSecret1;
+    boxes[0].openImg = box1opened
+    boxes[0].closedImg = box1closed
 
     boxes[1].img = imgSecret2;
     boxes[1].sound = audioSecret2;
     boxes[1].sound = audioSecret2;
+    boxes[1].openImg = box2opened
+    boxes[1].closedImg = box2closed
 
     boxes[2].img = imgSecret3;
+    boxes[2].openImg = box3opened
+    boxes[2].closedImg = box3closed
 
     boxes[3].img = imgSecret4;
     boxes[3].sound = audioSecret4;
+    boxes[3].openImg = box4opened
+    boxes[3].closedImg = box4closed
 
     boxes[4].img = imgSecret5;
     boxes[4].sound = audioSecret5;
+    boxes[4].openImg = box5opened
+    boxes[4].closedImg = box5closed
 
     boxes[5].img = imgSecret6;
     boxes[5].sound = audioSecret6;
+    boxes[5].openImg = box6opened
+    boxes[5].closedImg = box6closed
 
     boxes[6].img = imgSecret7;
+    boxes[6].openImg = box7opened
+    boxes[6].closedImg = box7closed
 
     boxes[7].img = imgSecret8;
+    boxes[7].openImg = box8opened
+    boxes[7].closedImg = box8closed
 
     boxes[8].img = imgSecret9;
     boxes[8].sound = audioSecret9;
+    boxes[8].openImg = box9opened
+    boxes[8].closedImg = box9closed
 
     boxes[9].img = imgSecret10;
+    boxes[9].openImg = box10opened
+    boxes[9].closedImg = box10closed
 
-    boxes[10].sound = fiftyYearsOldSound
     boxes[10].img = fiftyYearsOldImg;
-
+    boxes[10].sound = fiftyYearsOldSound
+    boxes[10].openImg = box11opened
+    boxes[10].closedImg = box11closed
 
     // Add collision event listener
     Matter.Events.on(engine, 'collisionStart', function(event) {
@@ -210,6 +254,7 @@ function draw() {
     for (let i = 0; i < boxes.length; i++) {
         boxes[i].show();
     }
+
     ground.show();
     leftWall.show();
     rightWall.show();
@@ -228,12 +273,12 @@ function mousePressed() {
     let boxClicked = false;
     for (let i = 0; i < boxes.length; i++) {
         if (boxes[i].contains(mouseX, mouseY)) {
-            // Open the box if not already opened
+            
             if (!boxes[i].opened) {
                 boxes[i].opened = true;
                 showSecret = true;
-                currentSecretImg = boxes[i].img; // Show the secret for this box
-                // Play the next opening box sound in sequence
+                currentSecretImg = boxes[i].img; // show the secret for this box
+                
                 let soundToPlay = openingBoxSounds[openingBoxSoundIndex % openingBoxSounds.length];
                 if (soundToPlay && soundToPlay.isLoaded()) {
                     soundToPlay.play();
@@ -243,7 +288,7 @@ function mousePressed() {
                 if (boxes[i].sound && boxes[i].sound.isLoaded()) {
                     setTimeout(() => {
                         boxes[i].sound.play();
-                    }, 1700);
+                    }, 1700); // audio delay when box is opened 
                 }
                 // Halve the background music volume ONLY when secret is shown
                 if (bgMusic && bgMusic.isLoaded()) {
