@@ -34,3 +34,12 @@ of een kapotte doos of een verfromvaaide doos
 - Verschillende doos geluiden afhankelijk van de inhoud van de doos 
 
 - feedback paul: een characrter toevoegen die de gebruiker begeleidt door het verhaal, zoals een oude oma die haar geheimen op haar zolder bewaard
+
+
+
+Toevoegen 06-11-2025:
+
+- verschillende sound effects voor dozen (maybe randomized?)
+- extra geluidje voor als een doos crashed (smashingBoxSound.mp3)
+- meer voicemails toevoegen i.p.v. secrets zonder audio
+- eventueel de bug oplossen dat de achtergrond soms niet zwart fade maar springt 

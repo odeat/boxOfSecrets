@@ -13,7 +13,8 @@ let selectedBox = null;
 let leftWall, rightWall, topWall;
 
 let droppedBoxSound;
-let openingBoxSound;
+let openingBoxSounds = [];
+let openingBoxSoundIndex = 0;
 let fiftyYearsOldSound;
 let audioSecret2;
 
@@ -38,7 +39,14 @@ let darkAtticFadeStartTime = null;
 
 function preload() {
     droppedBoxSound = loadSound('sounds/droppedBoxSound.mp3');
-    openingBoxSound = loadSound('sounds/openingBoxSound.mp3');
+    openingBoxSounds = [
+        loadSound('sounds/openingBoxSound.mp3'),
+        loadSound('sounds/foldingOpenBoxSound.mp3'),
+        loadSound('sounds/foldingOpenBoxSound2.mp3'),
+        loadSound('sounds/foldingOpenBoxSound3.mp3'),
+        loadSound('sounds/foldingOpenBoxSound4.mp3'),
+        loadSound('sounds/foldingOpenBoxSound5.mp3')
+    ];
     fiftyYearsOldSound = loadSound('sounds/50yearsOldSound.mp3');
     bgMusic = loadSound('sounds/Gigi Masin - Call me (But its very slowed).mp3');
     audioSecret2 = loadSound('sounds/slimfast.mp3');
@@ -225,11 +233,17 @@ function mousePressed() {
                 boxes[i].opened = true;
                 showSecret = true;
                 currentSecretImg = boxes[i].img; // Show the secret for this box
-                if (openingBoxSound && openingBoxSound.isLoaded()) {
-                    openingBoxSound.play();
+                // Play the next opening box sound in sequence
+                let soundToPlay = openingBoxSounds[openingBoxSoundIndex % openingBoxSounds.length];
+                if (soundToPlay && soundToPlay.isLoaded()) {
+                    soundToPlay.play();
                 }
+                openingBoxSoundIndex++;
+                // Delay the box's own sound by 2 seconds
                 if (boxes[i].sound && boxes[i].sound.isLoaded()) {
-                    boxes[i].sound.play();
+                    setTimeout(() => {
+                        boxes[i].sound.play();
+                    }, 1700);
                 }
                 // Halve the background music volume ONLY when secret is shown
                 if (bgMusic && bgMusic.isLoaded()) {
