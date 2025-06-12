@@ -22,7 +22,7 @@ class Boundary {
         rectMode(CENTER);
         strokeWeight(1);
         noStroke();
-        fill(0);
+        fill('#602B00');
         rect(0, 0, this.w, this.h);
         pop();
     }
