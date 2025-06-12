@@ -54,10 +54,13 @@ function preload() {
     fiftyYearsOldSound = loadSound('sounds/50yearsOldSound.mp3');
     bgMusic = loadSound('sounds/Gigi Masin - Call me (But its very slowed).mp3');
     audioSecret2 = loadSound('sounds/slimfast.mp3');
+    audioSecret3 = loadSound('sounds/desiree.mp3');
     audioSecret4 = loadSound('sounds/imMeantToBeAlone.mp3');
     audioSecret5 = loadSound('sounds/thankYouForCheating.mp3');
     audioSecret6 = loadSound('sounds/PTSD.mp3');
     audioSecret9 = loadSound('sounds/noOutletMalls.mp3');
+    audioSecretErica = loadSound('sounds/erica.mp3');
+    
 
     imgSecret1 = loadImage('assets/secret1.png');
     imgSecret2 = loadImage('assets/secret2.png');
@@ -128,11 +131,11 @@ function setup() {
 
     boxes[1].img = imgSecret2;
     boxes[1].sound = audioSecret2;
-    boxes[1].sound = audioSecret2;
-    boxes[1].openImg = box2opened
-    boxes[1].closedImg = box2closed
+    boxes[1].openImg = box9opened;
+    boxes[1].closedImg = box9closed;
 
     boxes[2].img = imgSecret3;
+    boxes[2].sound = audioSecret3;
     boxes[2].openImg = box3opened
     boxes[2].closedImg = box3closed
 
@@ -148,12 +151,13 @@ function setup() {
 
     boxes[5].img = imgSecret6;
     boxes[5].sound = audioSecret6;
-    boxes[5].openImg = box6opened
-    boxes[5].closedImg = box6closed
+    boxes[5].openImg = box10opened;
+    boxes[5].closedImg = box10closed;
 
     boxes[6].img = imgSecret7;
-    boxes[6].openImg = box7opened
-    boxes[6].closedImg = box7closed
+    boxes[6].sound = audioSecretErica;
+    boxes[6].openImg = box6opened;
+    boxes[6].closedImg = box6closed;
 
     boxes[7].img = imgSecret8;
     boxes[7].openImg = box8opened
@@ -161,12 +165,12 @@ function setup() {
 
     boxes[8].img = imgSecret9;
     boxes[8].sound = audioSecret9;
-    boxes[8].openImg = box9opened
-    boxes[8].closedImg = box9closed
+    boxes[8].openImg = box2opened;
+    boxes[8].closedImg = box2closed
 
     boxes[9].img = imgSecret10;
-    boxes[9].openImg = box10opened
-    boxes[9].closedImg = box10closed
+    boxes[9].openImg = box7opened;
+    boxes[9].closedImg = box7closed
 
     boxes[10].img = fiftyYearsOldImg;
     boxes[10].sound = fiftyYearsOldSound
