@@ -12,7 +12,8 @@ let mouseConstraint = null;
 let selectedBox = null;
 let leftWall, rightWall, topWall;
 
-let droppedBoxSound;
+let droppedBoxSounds = [];
+let droppedBoxSoundIndex = 0;
 let openingBoxSounds = [];
 let openingBoxSoundIndex = 0;
 let fiftyYearsOldSound;
@@ -38,7 +39,10 @@ let darkAtticFadeDuration = 3000; // milliseconds
 let darkAtticFadeStartTime = null;
 
 function preload() {
-    droppedBoxSound = loadSound('sounds/droppedBoxSound.mp3');
+    droppedBoxSounds = [
+        loadSound('sounds/droppedBoxSound.mp3'),
+        loadSound('sounds/smashingBoxSound.mp3')
+    ];
     openingBoxSounds = [
         loadSound('sounds/openingBoxSound.mp3'),
         loadSound('sounds/foldingOpenBoxSound.mp3'),
@@ -54,10 +58,6 @@ function preload() {
     audioSecret5 = loadSound('sounds/thankYouForCheating.mp3');
     audioSecret6 = loadSound('sounds/PTSD.mp3');
     audioSecret9 = loadSound('sounds/noOutletMalls.mp3');
-
-    
-    imgClosedBox = loadImage('assets/closedBox.png');
-    imgOpenedBox = loadImage('assets/openedBox.png');
 
     imgSecret1 = loadImage('assets/secret1.png');
     imgSecret2 = loadImage('assets/secret2.png');
@@ -184,9 +184,13 @@ function setup() {
             let box = boxes.find(box => bodies.includes(box.body));
 
             // plays sound if a box hits a border (not ground) and only once per collision
-            if (box && border && droppedBoxSound && droppedBoxSound.isLoaded()) {
+            if (box && border && droppedBoxSounds.length > 0) {
                 if (!box._isTouchingBorder) {
-                    droppedBoxSound.play();
+                    let soundToPlay = droppedBoxSounds[droppedBoxSoundIndex % droppedBoxSounds.length];
+                    if (soundToPlay && soundToPlay.isLoaded()) {
+                        soundToPlay.play();
+                    }
+                    droppedBoxSoundIndex++;
                     box._isTouchingBorder = true;
                 }
             }
