@@ -43,3 +43,5 @@ Toevoegen 06-11-2025:
 - extra geluidje voor als een doos crashed (smashingBoxSound.mp3)
 - meer voicemails toevoegen i.p.v. secrets zonder audio
 - eventueel de bug oplossen dat de achtergrond soms niet zwart fade maar springt
+
+(im gonna cry if this doesn't work)
