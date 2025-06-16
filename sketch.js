@@ -286,14 +286,16 @@ function draw() {
 
 function mousePressed() {
     let boxClicked = false;
+    // Only allow other boxes to open after openMeBox (boxes[11]) is opened
+    let openMeBoxOpened = boxes[11] && boxes[11].opened;
     for (let i = 0; i < boxes.length; i++) {
+        // If openMeBox is not opened, only allow clicking it
+        if (!openMeBoxOpened && i !== 11) continue;
         if (boxes[i].contains(mouseX, mouseY)) {
-            
             if (!boxes[i].opened) {
                 boxes[i].opened = true;
                 showSecret = true;
                 currentSecretImg = boxes[i].img; // show the secret for this box
-                
                 let soundToPlay = openingBoxSounds[openingBoxSoundIndex % openingBoxSounds.length];
                 if (soundToPlay && soundToPlay.isLoaded()) {
                     soundToPlay.play();
