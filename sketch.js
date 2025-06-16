@@ -27,6 +27,7 @@ let atticImg;
 let atticImg2;
 let atticImg3;
 let darkAttic;
+let introImg;
 
 let showSecret = false;
 let currentSecretImg = null;
@@ -77,6 +78,7 @@ function preload() {
     atticImg2 = loadImage('assets/atticImg.png');
     atticImg3 = loadImage('assets/atticImg3.png');
     darkAttic = loadImage('assets/darkenedAttic.png');
+    introImg = loadImage('assets/intro.png');
 
     box1opened = loadImage('assets/box1opened.png');
     box1closed = loadImage('assets/box1closed.png');
@@ -183,6 +185,7 @@ function setup() {
 
     boxes[11].openImg = openMeBoxOPENED;
     boxes[11].closedImg = openMeBox;
+    boxes[11].img = introImg;
 
     // Add collision event listener
     Matter.Events.on(engine, 'collisionStart', function(event) {
@@ -289,10 +292,9 @@ function mousePressed() {
     // Only allow other boxes to open after openMeBox (boxes[11]) is opened
     let openMeBoxOpened = boxes[11] && boxes[11].opened;
     for (let i = 0; i < boxes.length; i++) {
-        // If openMeBox is not opened, only allow clicking it
-        if (!openMeBoxOpened && i !== 11) continue;
         if (boxes[i].contains(mouseX, mouseY)) {
-            if (!boxes[i].opened) {
+            // Only allow opening if openMeBox is opened or this is openMeBox
+            if (!boxes[i].opened && (openMeBoxOpened || i === 11)) {
                 boxes[i].opened = true;
                 showSecret = true;
                 currentSecretImg = boxes[i].img; // show the secret for this box
@@ -312,6 +314,7 @@ function mousePressed() {
                     bgMusic.setVolume(0.15);
                 }
             }
+            // Always allow dragging any box
             selectedBox = boxes[i];
             mouseConstraint = Matter.Constraint.create({
                 pointA: { x: mouseX, y: mouseY },
