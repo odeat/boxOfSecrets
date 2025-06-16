@@ -28,6 +28,7 @@ let atticImg2;
 let atticImg3;
 let darkAttic;
 let introImg;
+let introSound;
 
 let showSecret = false;
 let currentSecretImg = null;
@@ -79,6 +80,7 @@ function preload() {
     atticImg3 = loadImage('assets/atticImg3.png');
     darkAttic = loadImage('assets/darkenedAttic.png');
     introImg = loadImage('assets/intro.png');
+    introSound = loadSound('sounds/intro.mp3');
 
     box1opened = loadImage('assets/box1opened.png');
     box1closed = loadImage('assets/box1closed.png');
@@ -186,6 +188,7 @@ function setup() {
     boxes[11].openImg = openMeBoxOPENED;
     boxes[11].closedImg = openMeBox;
     boxes[11].img = introImg;
+    boxes[11].sound = introSound;
 
     // Add collision event listener
     Matter.Events.on(engine, 'collisionStart', function(event) {
