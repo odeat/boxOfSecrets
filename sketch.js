@@ -100,6 +100,8 @@ function preload() {
     box10closed = loadImage('assets/box10closed.png');
     box11opened = loadImage('assets/box11opened.png');
     box11closed = loadImage('assets/box11closed.png');
+    openMeBoxOPENED = loadImage('assets/openMeBoxOPENED.png');
+    openMeBox = loadImage('assets/openMeBox.png');
 }
 
 function setup() {
@@ -123,8 +125,10 @@ function setup() {
     for (let i = 0; i < 11; i++) {
         boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(80, 160), random(80, 160)));
     }
-
+    // Add the 12th box (openMeBox) at 2x size
+    boxes.push(new MyBox(window.innerWidth / 2, window.innerHeight / 2, random(80, 160) * 2, random(80, 160) * 2));
    
+
     boxes[0].img = imgSecret1;
     boxes[0].openImg = box1opened
     boxes[0].closedImg = box1closed
@@ -176,6 +180,9 @@ function setup() {
     boxes[10].sound = fiftyYearsOldSound
     boxes[10].openImg = box11opened
     boxes[10].closedImg = box11closed
+
+    boxes[11].openImg = openMeBoxOPENED;
+    boxes[11].closedImg = openMeBox;
 
     // Add collision event listener
     Matter.Events.on(engine, 'collisionStart', function(event) {
